@@ -3,6 +3,7 @@ package com.hungergames.AnonymousMe.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hungergames.AnonymousMe.model.User;
@@ -14,8 +15,33 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder(); // Initialize BCryptPasswordEncoder;
+    }
+    
+    // Encrypt the password during signup
+    public void saveUser(User user) {
+        // Encrypt the password using PasswordEncoder (BCrypt)
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
+        userRepository.save(user);
+    }
+    
+    // Verify the password during login
+    public boolean authenticate(String username, String rawPassword) {
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            // Compare raw password with encrypted password
+            return passwordEncoder.matches(rawPassword, user.getPassword());
+        }
+        return false;
     }
     
     public Optional<User> findByUsername(String username) {
@@ -25,16 +51,35 @@ public class UserService {
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
+    
+    
+//    Old Version
+//    public User saveUser(User user) {
+//    	String encodedPassword = passwordEncoder.encode(user.getPassword());
+//    	user.setPassword(encodedPassword);
+////    	Save user to database
+//        return userRepository.save(user);
+//    }
+    
+//    Old Version
+//    public boolean checkPassword(String rawPassword, String encodedPassword) {
+//        return passwordEncoder.matches(rawPassword, encodedPassword);
+//    }
+//    
+//    // Validate the password during login
+//    public boolean validatePassword(String rawPassword, String encodedPassword) {
+//        return passwordEncoder.matches(rawPassword, encodedPassword);
+//    }
 	
-    public boolean validateUser(String username, String password) {
-        Optional<User> optionalUser = userRepository.findByUsername(username);
-        System.out.println(optionalUser.get().getUsername()+optionalUser.get().getPassword());
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            // Compare the password (without encoding/hashing for now)
-            return user.getPassword().equals(password);
-        }
-
-        return false; // User not found
-    }
+//    public boolean validateUser(User user) {
+//        Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
+//        System.out.println(optionalUser.get().getUsername()+optionalUser.get().getPassword());
+//        if (optionalUser.isPresent()) {
+//            User user = optionalUser.get();
+//            // Compare the password (without encoding/hashing for now)
+//            return user.getPassword().equals(password);
+//        }
+//
+//        return false; // User not found
+//    }
 }
