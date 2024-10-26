@@ -18,11 +18,6 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder(); // Initialize BCryptPasswordEncoder;
-    }
-    
     // Encrypt the password during signup
     public void saveUser(User user) {
         // Encrypt the password using PasswordEncoder (BCrypt)
