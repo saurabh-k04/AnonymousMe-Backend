@@ -1,4 +1,4 @@
-package com.anonymous.chat.config;
+package com.anonymous.basic.auth.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

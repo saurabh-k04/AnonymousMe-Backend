@@ -1,23 +1,52 @@
 package com.anonymous.chat.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Post {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "post")
+public class Post implements Serializable {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private String username;
 	private String description;
+	
+	@ManyToOne(fetch = FetchType.EAGER) // Many posts for one user
+    @JoinColumn(name = "user_id", nullable = false) // Foreign key in Post table
+    private User user;
 	
 	public Post() {
 		
 	}
 	
-	public Post(long id, String username, String description) {
+	public Post(long id, User user, String description) {
 		super();
 		this.id = id;
-		this.username = username;
 		this.description = description;
+		this.user = user;
 	}
+	
+    @JsonProperty("username")
+    public String getUsername() {
+        return user.getUsername(); // Get username from the associated User
+    }
+
+    @JsonProperty("user_id")
+    public long getUserId() {
+        return user.getId(); // Get user ID from the associated User
+    }
 
 	public long getId() {
 		return id;
@@ -27,13 +56,13 @@ public class Post {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 	public String getDescription() {
 		return description;

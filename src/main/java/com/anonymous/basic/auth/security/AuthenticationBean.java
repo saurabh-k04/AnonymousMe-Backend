@@ -1,4 +1,4 @@
-package com.anonymous.chat.security;
+package com.anonymous.basic.auth.security;
 
 public class AuthenticationBean {
 	private String message;
