@@ -39,6 +39,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User loginRequest) {
         boolean isAuthenticated = userService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
+	System.out.println("in Login");
         if (isAuthenticated) {
             return ResponseEntity.ok("{\"message\": \"Login successful!\"}");
         } else {
