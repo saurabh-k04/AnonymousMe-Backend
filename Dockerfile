@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /AnonymousMe
 
 # Copy the packaged JAR file into the container
-COPY target/*.jar app.jar
+COPY target/*.jar AnonymousMe.jar
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "AnonymousMe.jar"]
