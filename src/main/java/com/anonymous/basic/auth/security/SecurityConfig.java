@@ -19,7 +19,7 @@ public class SecurityConfig {
 				http
 					.authorizeHttpRequests(
 							auth -> auth
-							.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+							.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 							.anyRequest().authenticated()
 						)
 					.httpBasic(Customizer.withDefaults())
