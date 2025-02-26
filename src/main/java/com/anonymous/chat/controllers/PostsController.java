@@ -26,14 +26,19 @@ public class PostsController {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@GetMapping("/users/{username}/posts")
-    public List<Post> getPostsForUser(@PathVariable String username, Authentication authentication) {
-        // Ensure the logged-in user matches the requested username
-        if (!authentication.getName().equals(username)) {
-            throw new SecurityException("You are not authorized to view posts for this user.");
-        }
-        return postService.findAll(username);
-    }
+	// @GetMapping("/users/{username}/posts")
+ //    public List<Post> getPostsForUser(@PathVariable String username, Authentication authentication) {
+ //        // Ensure the logged-in user matches the requested username
+ //        if (!authentication.getName().equals(username)) {
+ //            throw new SecurityException("You are not authorized to view posts for this user.");
+ //        }
+ //        return postService.findAll(username);
+ //    }
+
+	@GetMapping("/posts")
+	public List<Post> getAllPosts() {
+	    return postService.findAll(); // Fetch all posts from the database
+	}
 	
 	@PostMapping("/users/{username}/posts")
 	public Post addPostForUser(@PathVariable String username, Authentication authentication, @RequestBody Post post) {
