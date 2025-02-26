@@ -14,8 +14,9 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	public List<Post> findAll(String username) {
-		return postRepository.findByUserUsername(username);
+	public List<Post> findAll() {
+		// return postRepository.findByUserUsername(username);
+		return postRepository.findAll();
 	}
 	
 	public void deleteById(long id) {
