@@ -16,7 +16,7 @@ import com.anonymous.chat.entities.User;
 import com.anonymous.chat.repositories.UserRepository;
 import com.anonymous.chat.services.PostService;
 
-@CrossOrigin(origins = "https://anonymous-ui.onrender.com")
+@CrossOrigin(origins = "https://anonymousmechat-backend.onrender.com")
 @RestController
 public class PostsController {
 	
