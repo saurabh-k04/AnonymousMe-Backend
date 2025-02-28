@@ -14,7 +14,7 @@ import com.anonymous.chat.entities.User;
 import com.anonymous.chat.payload.SignupRequest;
 import com.anonymous.chat.repositories.UserRepository;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://anonymousmechat-backend.onrender.com")
 @RestController
 public class JwtAuthenticationController {
 	
