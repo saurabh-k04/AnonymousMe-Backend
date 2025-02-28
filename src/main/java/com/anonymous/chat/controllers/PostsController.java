@@ -21,7 +21,7 @@ import com.anonymous.chat.repositories.UserRepository;
 import com.anonymous.chat.services.PostService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@CrossOrigin(origins = "https://anonymousmechat-backend.onrender.com")
+@CrossOrigin(origins = "https://anonymous-ui.onrender.com")
 @RestController
 public class PostsController {
 	
