@@ -18,7 +18,7 @@ import com.anonymous.chat.payload.SignupRequest;
 import com.anonymous.chat.repositories.UserRepository;
 import com.anonymous.chat.services.OTPService;
 
-@CrossOrigin(origins = "https://anonymousmechat-backend.onrender.com")
+@CrossOrigin(origins = "https://anonymous-ui.onrender.com")
 @RestController
 @RequestMapping("/auth")
 public class OtpAuthController {
