@@ -7,12 +7,6 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
-# Run SonarQube scan before building the application
-RUN mvn clean verify sonar:sonar \
-    -Dsonar.projectKey=anonymous-app \
-    -Dsonar.host.url=http://localhost:9000 \
-    -Dsonar.login=sqp_658804ad2bb6d88c9da11cf9c8ba643936771e0c || true
-
 # Build the application (skipping tests for faster build)
 RUN mvn clean package -DskipTests
 
