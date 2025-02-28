@@ -1,6 +1,7 @@
 package com.anonymous.chat.entities;
 
 import java.io.Serializable;
+import java.util.Base64;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -23,6 +25,9 @@ public class Post implements Serializable {
 	private long id;
 	private String description;
 	
+	@Lob
+    private byte[] image;	
+	
 	@ManyToOne(fetch = FetchType.EAGER) // Many posts for one user
     @JoinColumn(name = "user_id", nullable = false) // Foreign key in Post table
     private User user;
@@ -31,12 +36,12 @@ public class Post implements Serializable {
 		
 	}
 	
-	public Post(long id, User user, String description) {
-		super();
-		this.id = id;
-		this.description = description;
-		this.user = user;
-	}
+    public Post(long id, User user, String description, byte[] image) {
+        this.id = id;
+        this.description = description;
+        this.user = user;
+        this.image = image;
+    }
 	
     @JsonProperty("username")
     public String getUsername() {
@@ -71,6 +76,14 @@ public class Post implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+    public byte[] getImage() { return image; }
+    public void setImage(byte[] image) { this.image = image; }
+    
+    // ✅ Convert image byte array to Base64 string
+    public String getImageBase64() {
+        return this.image != null ? Base64.getEncoder().encodeToString(this.image) : null;
+    }
 	
 	@Override
 	public int hashCode() {
