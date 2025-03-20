@@ -32,7 +32,6 @@ public class UserController {
     
     @GetMapping("/check")
     public String getAllPosts() {
-	System.out.println("check");
         return "Application deployed successfully!!";
     }
     
