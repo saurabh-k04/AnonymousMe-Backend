@@ -45,7 +45,6 @@ public class PostsController {
 	
 	@GetMapping("/posts")
 	public List<Post> getAllPosts() {
-		System.out.println("check");
 	    return postService.findAll(); // Fetch all posts from the database
 	}
 	
